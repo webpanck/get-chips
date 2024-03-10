@@ -41,7 +41,7 @@ export const WelcomeLayout: React.FC = () => {
     }
   }, [direction, location.pathname, linkMap])
   const onSkip = () => {
-    localStorage.setItem('hasReadWelcomes', 'yse')
+    localStorage.setItem('hasReadWelcomes', 'yes')
   }
   return (
     <div className="bg-#5f34bf" h-screen flex flex-col items-stretch pb-16px>
