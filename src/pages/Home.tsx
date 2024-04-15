@@ -1,14 +1,14 @@
 import useSWR from 'swr'
-import axios from 'axios'
 import p from '../assets/images/pig.svg'
 import add from '../assets/icons/add.svg'
+import { ajax } from '../lib/ajax'
 
 export const Home: React.FC = () => {
   const { data: meData, error: meError } = useSWR('/api/v1/me', (path) => {
-    return axios.get(path)
+    return ajax.get(path)
   })
   const { data: itemData, error: itemError } = useSWR(meData ? '/api/v1/items' : null, (path) => {
-    return axios.get(path)
+    return ajax.get(path)
   })
   // eslint-disable-next-line no-console
   console.log(meError, itemData, itemError)
