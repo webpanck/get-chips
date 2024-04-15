@@ -5,10 +5,10 @@ import add from '../assets/icons/add.svg'
 
 export const Home: React.FC = () => {
   const { data: meData, error: meError } = useSWR('/api/v1/me', (path) => {
-    return axios.get(`https://mangosteen2.hunger-valley.com${path}`)
+    return axios.get(path)
   })
   const { data: itemData, error: itemError } = useSWR(meData ? '/api/v1/items' : null, (path) => {
-    return axios.get(`https://mangosteen2.hunger-valley.com${path}`)
+    return axios.get(path)
   })
   // eslint-disable-next-line no-console
   console.log(meError, itemData, itemError)
