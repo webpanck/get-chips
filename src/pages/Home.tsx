@@ -1,15 +1,17 @@
-import p from '../assets/images/pig.svg'
-import add from '../assets/icons/add.svg'
 import useSWR from 'swr'
 import axios from 'axios'
+import p from '../assets/images/pig.svg'
+import add from '../assets/icons/add.svg'
 
 export const Home: React.FC = () => {
   const { data: meData, error: meError } = useSWR('/api/v1/me', (path) => {
-    axios.get(`http://121.196.236.94:8080${path}`)
+    return axios.get(`https://mangosteen2.hunger-valley.com${path}`)
   })
   const { data: itemData, error: itemError } = useSWR(meData ? '/api/v1/items' : null, (path) => {
-    axios.get(`http://121.196.236.94:8080${path}`)
+    return axios.get(`https://mangosteen2.hunger-valley.com${path}`)
   })
+  // eslint-disable-next-line no-console
+  console.log(meError, itemData, itemError)
   return <div>
     <div flex justify-center items-center>
       <img mt-20vh mb-20vh width="128" height="130" src={p} />
