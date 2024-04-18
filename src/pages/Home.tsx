@@ -22,7 +22,7 @@ export const Home: React.FC<Props> = (props) => {
   const isLoadingItems = meData && !itemData && !itemError
 
   if (isLoadingMe || isLoadingItems) {
-    return <Loading />
+    return <Loading className="h-screen" />
   }
   if (itemData?.resources[0]) {
     return <Navigate to="/items" />
