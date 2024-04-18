@@ -6,6 +6,7 @@ import { Welcome2 } from '../pages/Welcome2'
 import { Welcome3 } from '../pages/Welcome3'
 import { Welcome4 } from '../pages/Welcome4'
 import { Home } from '../pages/Home'
+import { ItemsPage } from '../pages/ItemsPage'
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '/items',
-    element: <div>Items</div>
+    element: <ItemsPage />
   }
 ])
