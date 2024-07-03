@@ -7,6 +7,7 @@ import { useSignInStore } from '../stores/useSignInStore'
 import { hasError, validate } from '../lib/validate'
 import { ajax } from '../lib/ajax'
 import { Input } from '../components/Input'
+import axios from 'axios'
 
 export const SignInPage: React.FC = () => {
   const { data, error, setData, setError } = useSignInStore()
@@ -25,7 +26,7 @@ export const SignInPage: React.FC = () => {
       nav('/home')
     }
   }
-  const onClickCode = () => {
+  const onClickCode = async () => {
     const newError = validate({ email: data.email }, [
       { key: 'email', type: 'pattern', regex: /^.+@.+$/, message: '邮箱地址格式不正确' }
     ])
@@ -35,6 +36,10 @@ export const SignInPage: React.FC = () => {
     } else {
       console.log('没错')
       // 请求
+      const response = await axios.post('https://mangosteen2.hunger-valley.com/api/v1/validation_codes', {
+        email: data.email
+      })
+      console.log(response)
     }
   }
   return (
