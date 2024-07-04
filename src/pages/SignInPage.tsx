@@ -4,14 +4,18 @@ import { Gradient } from '../components/Gradient'
 import { Icon } from '../components/Icon'
 import { TopNav } from '../components/TopNav'
 import { useSignInStore } from '../stores/useSignInStore'
-import { hasError, validate } from '../lib/validate'
+import { FormError, hasError, validate } from '../lib/validate'
 import { ajax } from '../lib/ajax'
 import { Input } from '../components/Input'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
 export const SignInPage: React.FC = () => {
   const { data, error, setData, setError } = useSignInStore()
   const nav = useNavigate()
+  const onSubmitError = (err: AxiosError<{ errors: FormError<typeof data> }>) => {
+    setError(err.response?.data?.errors ?? {})
+    throw error
+  }
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
     const newError = validate(data, [
@@ -22,7 +26,11 @@ export const SignInPage: React.FC = () => {
     ])
     setError(newError)
     if (!hasError(newError)) {
-      await ajax.post('/api/v1/session', data)
+      const response = await ajax.post<{ jwt: string }>('https://mangosteen2.hunger-valley.com/api/v1/session', data)
+        .catch(onSubmitError)
+      const jwt = response.data.jwt
+      console.log('jwt', jwt)
+      localStorage.setItem('jwt', jwt)
       nav('/home')
     }
   }
