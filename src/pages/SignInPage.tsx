@@ -5,7 +5,7 @@ import { Icon } from '../components/Icon'
 import { TopNav } from '../components/TopNav'
 import { useSignInStore } from '../stores/useSignInStore'
 import { FormError, hasError, validate } from '../lib/validate'
-import { ajax } from '../lib/ajax'
+import { ajax, useAjax } from '../lib/ajax'
 import styled from 'styled-components'
 import { Input } from '../components/Input'
 import axios, { AxiosError } from 'axios'
@@ -39,34 +39,20 @@ export const SignInPage: React.FC = () => {
       nav('/home')
     }
   }
-  const Spin = styled(Icon)`
-    animation: spin 1s linear infinite;
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-  `
-  const { popup, hide, show } = usePopup({
-    children: <div p-16px>
-      <Spin className="w-32px h-32px" name="loading" />
-    </div>,
-    position: 'center'
-  })
+  const { post } = useAjax({ showLoading: true })
   const sendSmsCode = async () => {
     const newError = validate({ email: data.email }, [
       { key: 'email', type: 'pattern', regex: /^.+@.+$/, message: '邮箱地址格式不正确' }
     ])
     setError(newError)
     if (hasError(newError)) { throw new Error('表单出错') }
-    show()
-    const response = await axios.post('https://mangosteen2.hunger-valley.com/api/v1/validation_codes', {
+    const response = await post('https://mangosteen2.hunger-valley.com/api/v1/validation_codes', {
       email: data.email
-    }).finally(() => { hide() })
+    })
     return response
   }
   return (
     <div>
-      {popup}
       <Gradient>
         <TopNav title="登录" icon={<Icon name="back" />} />
       </Gradient>
