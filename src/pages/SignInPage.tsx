@@ -26,11 +26,14 @@ export const SignInPage: React.FC = () => {
     ])
     setError(newError)
     if (!hasError(newError)) {
+      // 发送请求
       const response = await ajax.post<{ jwt: string }>('https://mangosteen2.hunger-valley.com/api/v1/session', data)
         .catch(onSubmitError)
+      // 获取 JWT
       const jwt = response.data.jwt
-      console.log('jwt', jwt)
+      // JWT 放入 LS
       localStorage.setItem('jwt', jwt)
+      // 回到首页
       nav('/home')
     }
   }
