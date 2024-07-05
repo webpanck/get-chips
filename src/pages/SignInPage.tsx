@@ -6,6 +6,7 @@ import { TopNav } from '../components/TopNav'
 import { useSignInStore } from '../stores/useSignInStore'
 import { FormError, hasError, validate } from '../lib/validate'
 import { ajax } from '../lib/ajax'
+import styled from 'styled-components'
 import { Input } from '../components/Input'
 import axios, { AxiosError } from 'axios'
 import { usePopup } from '../hooks/usePopup'
@@ -38,7 +39,19 @@ export const SignInPage: React.FC = () => {
       nav('/home')
     }
   }
-  const { popup, hide, show } = usePopup({ children: <div>加载中</div>, position: 'center' })
+  const Spin = styled(Icon)`
+    animation: spin 1s linear infinite;
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  `
+  const { popup, hide, show } = usePopup({
+    children: <div p-16px>
+      <Spin className="w-32px h-32px" name="loading" />
+    </div>,
+    position: 'center'
+  })
   const sendSmsCode = async () => {
     const newError = validate({ email: data.email }, [
       { key: 'email', type: 'pattern', regex: /^.+@.+$/, message: '邮箱地址格式不正确' }
