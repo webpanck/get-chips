@@ -14,10 +14,12 @@ export const ItemsNewPage: React.FC = () => {
     { key: 'expenses', text: '支出', element: <Tags kind="expenses" /> },
     { key: 'income', text: '收入', element: <Tags kind="income" /> }
   ]
-  const [tabItem, setTabItem] = useState<Item['kind']>('expenses')
   const { data, error, setData, setError } = useCreateItemStore()
+  const onSubmit = () => {
+    console.log('你要提交是吧')
+  }
   return (
-    <div className={s.wrapper} h-screen flex flex-col>
+    <div className={s.wrapper} h-screen flex flex-col onSubmit={onSubmit}>
       <Gradient className="grow-0 shrink-0">
         <TopNav title="记一笔" icon={<Icon name="back" />} />
       </Gradient>
@@ -28,7 +30,7 @@ export const ItemsNewPage: React.FC = () => {
       <div text-28px>{JSON.stringify(data)}</div>
       <ItemAmount className="grow-0 shrink-0" itemDate={
         <ItemDate value={data.happen_at} onChange={(happen_at) => setData({ happen_at })} />
-      } value={data.amount} onChange={amount => setData({ amount })} />
+      } value={data.amount} onChange={amount => setData({ amount })} onSubmit={onSubmit} />
     </div>
   )
 }
