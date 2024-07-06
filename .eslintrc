@@ -5,6 +5,7 @@
     "new-parens": "off",
     "arrow-parens": "off",
     "symbol-description": "off",
+    "object-property-newline": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/brace-style": "off",
     "@typescript-eslint/lines-between-class-members": "off",
