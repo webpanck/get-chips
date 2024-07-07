@@ -16,7 +16,7 @@ export const ItemsNewPage: React.FC = () => {
     { key: 'expenses', text: '支出', element: <Tags kind="expenses" /> },
     { key: 'income', text: '收入', element: <Tags kind="income" /> }
   ]
-  const { data, error, setData, setError } = useCreateItemStore()
+  const { data, setData, setError } = useCreateItemStore()
   const { post } = useAjax({ showLoading: true, handleError: true })
   const onSubmit = async () => {
     const error = validate(data, [
