@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import { Gradient } from '../components/Gradient'
-import { Icon } from '../components/Icon'
 import { TopNav } from '../components/TopNav'
 import { Tabs } from '../components/Tabs'
 import s from './ItemsNewPage.module.scss'
@@ -10,6 +9,7 @@ import { useCreateItemStore } from '../stores/useCreateItemStore'
 import { ItemDate } from './ItemsNewPage/ItemDate'
 import { useAjax } from '../lib/ajax'
 import { validate, hasError } from '../lib/validate'
+import { BackIcon } from '../components/BackIcon'
 
 export const ItemsNewPage: React.FC = () => {
   const tabItems: { key: Item['kind']; text: string; element?: ReactNode }[] = [
@@ -38,7 +38,7 @@ export const ItemsNewPage: React.FC = () => {
   return (
     <div className={s.wrapper} h-screen flex flex-col onSubmit={onSubmit}>
       <Gradient className="grow-0 shrink-0">
-        <TopNav title="记一笔" icon={<Icon name="back" />} />
+        <TopNav title="记一笔" icon={<BackIcon />} />
       </Gradient>
       <Tabs tabItems={tabItems} className="text-center grow-1 shrink-1 overflow-hidden"
         classPrefix='itemsNewPage'
