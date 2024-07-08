@@ -10,9 +10,14 @@ import { Icon } from '../components/Icon'
 import { ItemsSummary } from './ItemsPage/ItemsSummary'
 import { ItemsList } from './ItemsPage/ItemsList'
 import { timeRangeToStartAndEnd } from '../lib/timeRangeToStartAndEnd'
+import { time } from '../lib/time'
 
 export const ItemsPage: React.FC = () => {
-  const [timeRange, setTimeRange] = useState<TimeRange>('thisMonth')
+  const [timeRange, setTimeRange] = useState<TimeRange>({
+    name: 'thisMonth',
+    start: time().firstDayOfMonth,
+    end: time().lastDayOfMonth.add(1, 'day')
+  })
   const { visible, setVisible } = useMenuStore()
   const { start, end } = timeRangeToStartAndEnd(timeRange)
 
