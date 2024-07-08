@@ -1,3 +1,4 @@
+import React from 'react'
 import { usePopup } from '../../hooks/usePopup'
 import { time } from '../../lib/time'
 import { Datepicker } from '../Datepicker'
@@ -20,7 +21,7 @@ export const DateInput: React.FC<Props> = (props) => {
     <>
       {popup}
       <input className={className} c-input-text type="text" readOnly data-xxxx
-        placeholder={placeholder} value={value} onClick={toggle} />
+        placeholder={placeholder} value={time(value).format()} onClick={toggle} />
     </>
   )
 }
