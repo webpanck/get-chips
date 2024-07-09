@@ -12,10 +12,10 @@ import { ItemsNewPage } from '../pages/ItemsNewPage'
 import { TagsNewPage } from '../pages/TagsNewPage'
 import { TagsEditPage } from '../pages/TagsEditPage'
 import { StatisticsPage } from '../pages/StatisticsPage'
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { ErrorUnauthorized, ErrorEmptyData } from '../errors'
 import { ItemsPageError } from '../pages/ItemsPageError'
-import { preload } from 'swr'
+import { ajax } from '../lib/ajax'
 import { ErrorPage } from '../pages/ErrorPage'
 
 export const router = createBrowserRouter([
@@ -44,8 +44,9 @@ export const router = createBrowserRouter([
     element: <Outlet />,
     errorElement: <ErrorPage />,
     loader: async () => {
-      return await axios.get<Resource<User>>('/api/v1/me').catch(e => {
-        if (e.response?.status === 401) { throw new ErrorUnauthorized }
+      return await ajax.get<Resource<User>>('/api/v1/me').catch(e => {
+        // if (e.response?.status === 401) { throw new ErrorUnauthorized }
+        throw e
       })
     },
     children: [
@@ -58,7 +59,7 @@ export const router = createBrowserRouter([
             if (error.response?.status === 401) { throw new ErrorUnauthorized() }
             throw error
           }
-          const response = await axios.get<Resources<Item>>('/api/v1/items?page=1').catch(onError)
+          const response = await ajax.get<Resources<Item>>('/api/v1/items?page=1').catch(onError)
           if (response.data.resources.length > 0) {
             return response.data
           } else {
