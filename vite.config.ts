@@ -13,6 +13,7 @@ export default defineConfig((env) => {
         '/api/': {
           target: 'https://mangosteen2.hunger-valley.com/',
           changeOrigin: false,
+          secure: false
         },
       }
     },
