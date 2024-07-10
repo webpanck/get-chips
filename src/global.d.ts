@@ -1,12 +1,12 @@
 var isDev: boolean
 
-type JSONValue = string | number | boolean | null | { [k: string]: JSONValue } | JSONValue[]
+type JSONValue = string | number | boolean | null | { [k: string | number]: JSONValue } | JSONValue[]
 
-interface Resource<T> {
+type Resource<T> = {
   resource: T
 }
 
-interface Resources<T> {
+type Resources<T> = {
   resources: T[]
   pager: {
     page: number
@@ -15,7 +15,7 @@ interface Resources<T> {
   }
 }
 
-interface User {
+type User = {
   id: number
   email: string
   name?: string
@@ -23,12 +23,13 @@ interface User {
   updated_at: string
 }
 
-interface Item {
+type Item = {
   id: number
   user_id: number
   amount: number
   note?: string
   tag_ids: number[]
+  tags?: Tag[]
   happen_at: string
   created_at: string
   updated_at: string
@@ -36,7 +37,7 @@ interface Item {
   deleted_at?: string
 }
 
-interface Tag {
+type Tag = {
   id: number
   kind: Item['kind']
   user_id: number
